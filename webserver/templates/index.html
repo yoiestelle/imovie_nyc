@@ -1,29 +1,102 @@
-<html>
-  <style>
-    body{ 
-      font-size: 15pt;
-      font-family: arial;
-    }
-  </style>
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Name</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white; /* Plain white background */
+            color: black;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        header {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            gap: 60px; /* Increased spacing between links */
+            margin-top: 20px;
+            font-size: 1.5em; /* Larger font size */
+            font-weight: bold;
+        }
+        nav a {
+            text-decoration: none;
+            color: black; /* Black text for links */
+        }
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #e0e0e0; /* Light gray background for button */
+            color: black; /* Black text for the button */
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1em;
+            text-decoration: none;
+        }
+        .separator {
+            width: 80%;
+            border-top: 2px solid black;
+            margin: 20px 0;
+        }
+        .content {
+            text-align: center;
+            margin: 40px;
+            flex: 1;
+            font-size: 1.2em; /* Slightly larger font for content */
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            border-top: 2px solid black;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+    </style>
+</head>
 <body>
-  <h1>Some famous Computer Scientists</h1>
-  <div>{{data}}</div>
 
-  <div>
-    {% for n in data %}
-    <div>{{n}}</div>
-    {% endfor %}
-  </div>
+    <header>
+        <h1>Website Name</h1>
+        <nav>
+            <a href="#">Calendar</a>
+            <a href="#">Movies</a>
+            <a href="#">Events</a>
+            <a href="#">Film Series</a>
+            <a href="#">Watchlists</a>
+        </nav>
+        <div class="separator"></div>
+        <a href="#" class="login-button">Log-in</a> <!-- Styled as per the example -->
+    </header>
 
-<p><a href="/another">Go to the other page</a></p>
+    <div class="content">
+        <p>Add a description of website and where the data comes from</p>
+        <p>+</p>
+        <p>Copyright</p>
+    </div>
 
-<form method="POST" action="/add">
-<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
-</form>
+    <footer class="footer">
+        Created by Othmane El Houssi & Estelle Pan
+    </footer>
 
 </body>
-
-
 </html>
+
