@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-container">
+        <a href="/film-series" class="btn-back">Go Back to Film Series</a>
+        <div class="content-details">
+            <h1>{{ film.title }}</h1>
+            <p>{{ film.description }}</p>
+        </div>
+        <div class="screenings-details">
+            {% if screenings %}
+                <ul>
+                    {% for screening in screenings %}
+                            <h3><a href="/movie/{{ screening.mid }}">{{ screening.title }}</a></h2>
+                            <div class="screening-card">
+                                <i class="fas fa-calendar-alt"></i>
+                                <p>{{ screening.event_date }}, {{ screening.event_time }}</p>
+                            </div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+            
+                <p>No screenings found.</p>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

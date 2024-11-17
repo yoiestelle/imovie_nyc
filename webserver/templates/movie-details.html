@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-container">
+        <a href="/movies" class="btn-back">Go Back to Movies</a>
+
+        <div class="content-details">
+            <h1>{{ movie.title }}</h1>
+            <p><strong>Synopsis:</strong> {{ movie.synopsis }}</p>
+            <p><strong>Length:</strong> {{ movie.length }}</p>
+            <p><strong>Director:</strong> {{ movie.director_name }}</p>
+            <p><strong>Cast:</strong> {{ movie.cast_name }}</p>
+            <p><strong>Release Year:</strong> {{ movie.release_year }}</p>
+            <p><strong>Languages:</strong> Dubbed in {{ movie.dub_langs }}, Subtitled in {{ movie.sub_langs }}</p>
+            <p><strong>Film Size:</strong> {{ movie.film_size }}</p>
+            <p><strong>Ticket Purchase Link:</strong> <a href="{{ movie.ticket_purchase_link }}" target="_blank">Buy Tickets</a></p>
+            <p><strong>Average Rating:</strong> {{ movie.average_rating | default("No rating yet") }}</p>
+        </div>
+        <div class="screenings-details">
+            {% if screenings %}
+                {% for screening in screenings %}
+                    <div class="screening-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>{{ screening.event_date }}, {{ screening.event_time }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No screenings found.</p>
+            {% endif %}
+        </div>
+
+        <div class="reviews">
+            <h2>Reviews: {{ movie.average_rating | default("No rating yet") }}</h2>
+            {% if reviews %}
+                <ul>
+                    {% for review in reviews %}
+                        <li class="review-card">
+                            <p><strong>Rating:</strong> {{ review.rating }}</p>
+                            <p><strong>Reviewed by:</strong> {{ review.writer }}</p>
+                            <p><strong>Review:</strong> {{ review.content }}</p>
+                            <p><small>Reviewed on: {{ review.date }} : {{ review.time }}</small></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="/movie/{{ mid }}/reviews" class="btn-more-reviews">See All Reviews</a>
+            {% else %}
+                <p>No reviews yet for this movie.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

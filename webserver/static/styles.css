@@ -1,0 +1,291 @@
+/*******Basic styling for all pages******/
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 540px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+nav {
+    display: flex;
+    gap: 60px;
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+nav a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+.separator {
+    width: 80%;
+    border-top: 2px solid black;
+    margin: 20px 0;
+}
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-top: 2px solid black;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+/****************************/
+
+
+/**********SEARCH-BARS*********/
+.search-bar {
+    display: flex;
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0;
+    background-color: #e0e0e0;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1em;
+    padding: 5px;
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-self: flex-end;
+    font-size: 1.2em;
+}
+/*******************************************************/
+
+
+/***********Find Movies, Events, Film-Series Page**************/
+.content-list {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.content-info {
+    width: 100%;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.info-card{
+    background-color: #ebe9e9;
+    padding: 15px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.info-card a{
+    color: rgb(67, 67, 191);
+    text-decoration: none;
+}
+/*******************************************************/
+
+
+/***********************Movies-details Page********************************/
+
+.content-container {
+    width: 90%;
+    max-width: 1200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 auto;
+}
+
+/* Movie Details Section */
+.movie-details {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(45, 45, 45, 0.1);
+    word-wrap: break-word;
+}
+
+.movie-details h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.movie-details p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+/* Screenings Details */
+.screenings-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.screening-card {
+    background-color: #e0e0e0;
+    padding: 15px;
+    border-radius: 5px;
+    width: 48%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+.screening-card i {
+    font-size: 1.5em;
+    color: #88bcf3;
+    margin-right: 10px;
+}
+
+.screening-card p {
+    font-size: 1.2em;
+    margin: 0;
+    color: #333;
+}
+
+/* Reviews Section */
+.reviews {
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(45, 45, 45, 0.1);
+}
+
+.reviews h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.review-card {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.review-card p {
+    margin: 5px 0;
+}
+
+.review-card small {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.review-card ul{
+    list-style-type: none;
+}
+
+/* Buttons Styling */
+.btn-back, .btn-more-reviews {
+    display: inline-block;
+    background-color: rgb(67, 67, 191);
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+.btn-back:hover, .btn-more-reviews:hover {
+    background-color: rgb(58, 58, 159);
+}
+
+.btn-more-reviews {
+    margin-top: 15px;
+}
+
+
+/*******************Login************************/
+.login-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e0e0e0;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+
+/*******/
+
+button {
+    padding: 8px 12px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.calendar {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.day-column {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 540px;
+    border-radius: 5px;
+}
+.content-index{
+    min-height: 600px;
+}
+
+.day-column h3 {
+    text-align: center;
+}
+
+.event-card {
+    background-color: #f0f0f0;
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.event-card a {
+    text-decoration: none;
+    color: #333;
+}

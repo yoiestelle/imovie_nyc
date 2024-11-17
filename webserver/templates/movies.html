@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="search-bar">
+        <form action="{{ url_for('find_movie') }}" method="post">
+            <input type="text" name="name" placeholder="Search for a movie..." required>
+            <button type="submit">🔍</button>
+        </form>
+    </div>
+
+    <div class="content-list">
+        {% if data %}
+            {% for movie in data %}
+                <div class="info-card">
+                    <h2><a href="/movie/{{ movie.mid }}">{{ movie.title }}</a></h2>
+                    <p><strong>Synopsis:</strong> {{ movie.synopsis }}</p>
+                    <p><strong>Average Rating:</strong> {{ movie.average_rating | default("No rating yet") }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No movies found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+

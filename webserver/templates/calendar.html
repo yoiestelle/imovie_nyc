@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Weekly Calendar</h1>
+
+    <div class="navigation">
+        <form action="{{ url_for('navigate_week') }}" method="post">
+            <button type="submit" name="direction" value="previous">&larr; Previous Week</button>
+            <span>Week: {{ week_start.strftime('%m/%d/%Y') }} - {{ week_end.strftime('%m/%d/%Y') }}</span>
+            <button type="submit" name="direction" value="next">Next Week &rarr;</button>
+        </form>
+    </div>
+
+    <div class="calendar">
+        {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
+            <div class="day-column">
+                <h3>{{ day }}</h3>
+                {% for event in events if event.event_date.strftime('%A') == day %}
+                    <div class="event-card">
+                        <p>{{ event.event_time.strftime('%I:%M %p') }} - {{ event.title }}</p>
+                    </div>
+                {% else %}
+                    <p>No events</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}

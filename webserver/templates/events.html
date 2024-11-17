@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-list">
+        {% if events %}
+            {% for event in events %}
+                <div class="info-card">
+                    <h2>{{ event.title }}</h2>
+                    <p> {{ event.description }}</p>
+                    <div class="screening-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>{{ event.event_date }}, {{ event.event_time }}</p>
+                    </div>
+                    <div class="screening-card">
+                        <p>{{ event.location}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No events found.</p>
+        {% endif %}
+    </div>
+{% endblock %}

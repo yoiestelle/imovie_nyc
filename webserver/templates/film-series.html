@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-list">
+        {% if filmseries %}
+            {% for series in filmseries %}
+                <div class="info-card">
+                    <h2><a href="/film-series/{{ series.fsid }}">{{ series.title }}</a></h2>
+                    <p> {{ series.description }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No film series found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
