@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Watchlist{% endblock %}
+
+{% block content %}
+<div class="watchlist-container">
+    <h1>My Watchlist</h1>
+    <div class="watchlist-items">
+        {% for movie in movies %}
+        <div class="watchlist-item">
+            <h2>{{ movie.title }}</h2>
+            <p>{{ movie.synopsis }}</p>
+            <p><strong>Length:</strong> {{ movie.length }}</p>
+            <form method="POST" action="{{ url_for('update_watch_status', wid=wid) }}">
+                <input type="hidden" name="mid" value="{{ movie.mid }}">
+                <label>
+                    <input type="checkbox" name="if_watched" value="1" {% if movie.if_watched %}checked{% endif %}>
+                    Watched
+                </label>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

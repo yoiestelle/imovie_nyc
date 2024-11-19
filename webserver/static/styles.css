@@ -226,7 +226,8 @@ nav a {
 }
 
 
-/*******************Login************************/
+/******************* Login ***********************/
+
 .login-button {
     position: absolute;
     top: 20px;
@@ -239,6 +240,320 @@ nav a {
     font-size: 1em;
     text-decoration: none;
 }
+
+header .login-button:hover {
+    background-color: #d0d0d0;
+}
+
+/* Login Page Specific Container */
+.login-container {
+    margin: 100px auto; /* Adds space from the header */
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+/* Login Header */
+.login-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #444;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Form Styling */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-form label {
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.login-form input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Submit Button */
+.login-form button {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.login-form button:hover {
+    background-color: #333;
+}
+
+/* Create Account Link */
+.create-account {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.create-account a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
+/* Flash Messages */
+.flash-messages {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.flash-messages li {
+    background: #ffd6d6;
+    padding: 10px;
+    border: 1px solid #ff4c4c;
+    border-radius: 4px;
+    color: #ff0000;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Page Spacing (if needed) */
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+
+
+
+
+
+/******************* Profile ***********************/
+
+.profile-container {
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.profile-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.profile-info p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-form label {
+    font-weight: bold;
+    text-align: left;
+}
+
+.profile-form input,
+.profile-form textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.update-button {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.update-button:hover {
+    background-color: #333;
+}
+
+
+
+.user-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.profile-button, .logout-button {
+    background-color: #e0e0e0;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.profile-button:hover, .logout-button:hover {
+    background-color: #d0d0d0;
+}
+
+/******************* Watchlist ***********************/
+
+
+.watchlist-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.watchlist-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.watchlist-item {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.watchlist-item h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.watchlist-item p {
+    font-size: 1em;
+    color: #555;
+}
+
+.watchlist-item a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.watchlist-item a:hover {
+    text-decoration: underline;
+}
+
+.watchlist-item form {
+    margin-top: 10px;
+}
+
+.watchlist-item label {
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+.watchlist-item button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.watchlist-item button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+/* Center the content on the page */
+.content-index {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 200px); /* Adjust height for header/footer */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Style for the intro section */
+.intro-section {
+    max-width: 800px;
+    background-color: #f8f8f8;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.intro-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.intro-section p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Style for the footer section */
+.footer-section {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 20px;
+}
+
+/* Style for the intro image */
+.intro-image {
+    max-width: 100%;
+    height: auto; 
+    margin: 20px 0; 
+}
+
 
 
 /*******/

@@ -3,23 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Name - {% block title %}Home{% endblock %}</title>
+    <title>Film Avenue - {% block title %}Home{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-
     <header>
-        <h1><nav><a href="/">Website Name</a></nav></h1>
+        <h1><nav><a href="/">Film Avenue </a></nav></h1> 
         <nav>
             <a href="/calendar">Calendar</a>
             <a href="/movies">Movies</a>
             <a href="/events">Events</a>
             <a href="/film-series">Film Series</a>
-            <a href="#">Watchlists</a>
+            {% if session.get('user_id') %}
+        <!-- Dynamically generate the Watchlist link if the user is logged in -->
+            <a href="{{ url_for('view_watchlist', wid=session.get('current_watchlist', 1)) }}">Watchlist</a>
+        {% else %}
+        <!-- If the user is not logged in, link Watchlist to login -->
+            <a href="/login">Watchlist</a>
+        {% endif %}
+
         </nav>
         <div class="separator"></div>
-        <a href="#" class="login-button">Log-in</a>
+        {% if session.get('username') %}
+            <!-- Show profile link and logout when logged in -->
+            <div class="user-controls">
+                <a href="/profile" class="profile-button">Profile</a>
+                <a href="/logout" class="logout-button">Log-out</a>
+            </div>
+        {% else %}
+            <!-- Show login link when not logged in -->.
+            <a href="/login" class="login-button">Log-in</a>
+        {% endif %}
     </header>
 
     {% block content %}{% endblock %}
@@ -27,6 +42,6 @@
     <footer class="footer">
         Created by Othmane El Houssi & Estelle Pan
     </footer>
-
 </body>
 </html>
+

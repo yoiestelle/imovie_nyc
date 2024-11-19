@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <div class="profile-container">
+        <h2 class="profile-header">My Profile</h2>
+        
+        <!-- Display user information -->
+        <div class="profile-info">
+            <p><strong>Name:</strong> {{ user['name'] }}</p>
+            <p><strong>Email:</strong> {{ user['email'] }}</p>
+            <p><strong>Bio:</strong> {{ user['bio'] }}</p>
+        </div>
+        
+        <!-- Form to update profile -->
+        <form class="profile-form" method="POST">
+            <label for="name">Update Name:</label>
+            <input type="text" id="name" name="name" value="{{ user['name'] }}" required>
+            
+            <label for="bio">Update Bio:</label>
+            <textarea id="bio" name="bio" rows="4">{{ user['bio'] }}</textarea>
+            
+            <button type="submit" class="update-button">Update Profile</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

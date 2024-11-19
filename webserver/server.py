@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, g, redirect, url_for, session, Response
+from flask import flash, Flask, request, render_template, g, redirect, url_for, session, Response
 from sqlalchemy import * 
 from sqlalchemy import text 
 from sqlalchemy.pool import NullPool 
@@ -253,12 +253,104 @@ def navigate_week():
     return redirect(url_for('calendar_view'))
 
 
+###### Login Route #########
 
-
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    os.abort(401)
-    this_is_never_executed()
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        query = "SELECT * FROM Users WHERE email = :email"
+        user = g.conn.execute(text(query), {'email': email}).fetchone()
+
+        if user and user['password'] == password:
+            session['user_id'] = user['email']
+            session['username'] = user['username']
+            flash('Login successful!', 'success')
+            return redirect('/')
+        else:
+            flash('Invalid email or password.', 'danger')
+
+    return render_template('login.html')
+
+
+# Logout Route
+@app.route('/logout')
+def logout():
+    session.clear()  # Clear session data
+    flash('You have been logged out.', 'info')
+    return redirect('/login')
+
+
+###### Profile #########
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if 'user_id' not in session:
+        flash('You need to log in to access your profile.', 'danger')
+        return redirect('/login')
+
+    user_id = session['user_id']
+    query = "SELECT * FROM Users WHERE email = :email"
+    user = g.conn.execute(text(query), {'email': user_id}).fetchone()
+
+    if request.method == 'POST':
+        # Update user details
+        name = request.form.get('name')
+        bio = request.form.get('bio')
+        update_query = """
+            UPDATE Users SET username = :name, bio = :bio WHERE email = :email
+        """
+        g.conn.execute(text(update_query), {'name': name, 'bio': bio, 'email': user_id})
+        flash('Profile updated successfully!', 'success')
+        return redirect('/profile')
+
+    return render_template('profile.html', user=user)
+
+
+###### Watchlist #########
+
+@app.route('/watchlist/<int:wid>', methods=['GET'])
+def view_watchlist(wid):
+    if 'user_id' not in session:
+        flash('You need to log in to view your watchlist.', 'danger')
+        return redirect('/login')
+
+    query = """
+        SELECT Movie.mid, Movie.title, Movie.synopsis, Movie.length, Track.if_watched
+        FROM Track
+        JOIN Movie ON Track.mid = Movie.mid
+        WHERE Track.wid = :wid
+    """
+    movies = g.conn.execute(text(query), {'wid': wid}).fetchall()
+
+    return render_template('watchlist.html', movies=movies, wid=wid)
+
+@app.route('/watchlist/<int:wid>/update', methods=['POST'])
+def update_watch_status(wid):
+    if 'user_id' not in session:
+        flash('You need to log in to update your watchlist.', 'danger')
+        return redirect('/login')
+
+    mid = request.form.get('mid')
+    if_watched = request.form.get('if_watched', '0')  # Default to 0 (not watched)
+
+    query = """
+        UPDATE Track
+        SET if_watched = :if_watched
+        WHERE mid = :mid AND wid = :wid
+    """
+    g.conn.execute(text(query), {'if_watched': if_watched, 'mid': mid, 'wid': wid})
+    flash('Watchlist updated successfully!', 'success')
+    return redirect(url_for('view_watchlist', wid=wid))
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
