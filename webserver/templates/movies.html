@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="search-bar">
-        <form action="{{ url_for('find_movie') }}" method="post">
+        <form action="/movies" method="post">
             <input type="text" name="name" placeholder="Search for a movie..." required>
             <button type="submit">🔍</button>
         </form>

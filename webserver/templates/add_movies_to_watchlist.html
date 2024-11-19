@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add Movies to Watchlist</h1>
+
+    <form method="post">
+        <input type="text" name="search" placeholder="Search for movies...">
+        <button type="submit">Search</button>
+    </form>
+
+    <form method="post">
+        <div class="movie-list">
+            {% for movie in movies %}
+                <div class="movie-card">
+                    <label>
+                        <input type="checkbox" name="movies" value="{{ movie.mid }}">
+                        <h3>{{ movie.title }}</h3>
+                        <p>{{ movie.synopsis }}</p>
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Add Selected Movies</button>
+    </form>
+{% endblock %}

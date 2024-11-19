@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-container">
+        <a href="/watchlists" class="btn-back">Go Back to Watchlists</a>
+
+        <div class="content-details">
+            <h1>{{ watchlist.name }}</h1>
+            <p><strong>Owner:</strong> {{ watchlist.owner }}</p>
+        </div>
+        <div class="info-card">
+            {% if movies %}
+                {% for movie in movies %}
+                    <div class="review-card">
+                        <a href="/movie/{{ movie.mid }}">{{ movie.title}}</a>
+                    </div>
+                    <div class="check-box">
+                        {% if logged_in == watchlist.owner %}
+                            {% if movie.if_watched %}
+                                <input type="checkbox" id="checkbox2" checked>
+                            {% else %}
+                                <input type="checkbox" id="checkbox1">
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No movies in watchlist.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

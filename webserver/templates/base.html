@@ -10,16 +10,20 @@
 <body>
 
     <header>
-        <h1><nav><a href="/">Website Name</a></nav></h1>
+        <h1><nav><a href="/">Film Avenue</a></nav></h1>
         <nav>
             <a href="/calendar">Calendar</a>
             <a href="/movies">Movies</a>
             <a href="/events">Events</a>
             <a href="/film-series">Film Series</a>
-            <a href="#">Watchlists</a>
+            <a href="/watchlists">Watchlists</a>
         </nav>
         <div class="separator"></div>
-        <a href="#" class="login-button">Log-in</a>
+        {% if logged_in %}
+            <a href="/profile" class="login-button">Profile</a>
+        {% else %}
+            <a href="/login" class="login-button">Log-in</a>
+        {% endif %}
     </header>
 
     {% block content %}{% endblock %}

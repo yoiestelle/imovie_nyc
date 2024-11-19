@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="auth-container">
+        <h2>Create a New Watchlist</h2>
+        <form action="/create-watchlist" method="post">
+            <label for="name">Watchlist Name</label>
+            <input type="text" name="name" id="name" required><br>
+
+            <label>
+                <input type="checkbox" name="public" id="public"> Public
+            </label><br>
+
+            <button type="submit">Create Watchlist</button>
+        </form>
+    </div>
+{% endblock %}

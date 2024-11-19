@@ -5,9 +5,17 @@
 {% block content %}
 <body>
     <div class="content-index">
-        <p>Add a description of website and where the data comes from</p>
-        <p>+</p>
-        <p>Copyright</p>
+        <div class="intro-section">
+            <img src="{{ url_for('static', filename='images/film_avenue_banner.jpg') }}" alt="Film Avenue Banner" class="intro-image">
+            <p>
+                Dive into NYC's indie film culture with Film Avenue. Discover the latest screenings at 
+                <strong>Metrograph</strong>, <strong>MoMA</strong>, and <strong>Film Forum</strong>, featuring 
+                detailed schedules, special events, and engaging Q&A sessions with filmmakers and casts.
+            </p>
+        </div>
+        <div class="footer-section">
+            <p>Copyright © 2024 Film Avenue. All rights reserved.</p>
+        </div>
     </div>
 </body>
 {% endblock %}

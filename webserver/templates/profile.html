@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">User Profile</h1>
+{% if logged_in %}
+    <a href="/logout" class="btn-secondary logout-button">Log-out</a>
+{% endif %}
+<div class="profile-container content-card">
+    <form method="POST" action="{{ url_for('profile') }}" class="profile-form">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ user['email'] }}" readonly class="input-field">
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="{{ user['username'] }}" required class="input-field">
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Bio</label>
+            <textarea id="description" name="description" rows="3" placeholder="Enter a description" class="textarea-field">{{ user['description'] }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="current_password">Current Password</label>
+            <input type="password" id="current_password" name="current_password" placeholder="Enter your current password" required class="input-field">
+        </div>
+        
+        <div class="form-group">
+            <label for="new_password">New Password (optional)</label>
+            <input type="password" id="new_password" name="new_password" placeholder="Enter a new password" class="input-field">
+        </div>
+        
+        <button type="submit" class="btn-primary">Update Profile</button>
+    </form>
+</div>
+
+<a href="{{ url_for('index') }}" class="btn-link">Back to Home</a>
+{% endblock %}

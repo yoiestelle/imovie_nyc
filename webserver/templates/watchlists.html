@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="search-bar">
+        <form action="/watchlists" method="post">
+            <input type="text" name="name" placeholder="Search for a watchlist..." required>
+            <button type="submit">🔍</button>
+        </form>
+    </div>
+
+    {% if logged_in %}
+        <div class="create-watchlist">
+            <a href="/create-watchlist">
+                <button>Create Watchlist</button>
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="content-list">
+        {% if data %}
+            {% for watchlist in data %}
+                <div class="info-card">
+                    <h2><a href="/watchlists/{{ watchlist.wid }}">{{ watchlist.name }}</a></h2>
+                    <p><strong>Owner:</strong> {{ watchlist.owner }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No watchlists found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
