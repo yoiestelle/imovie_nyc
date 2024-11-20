@@ -503,7 +503,6 @@ def profile():
             with engine.connect() as connection:
                 # Execute the update query
                 connection.execute(update_query, params)
-                connection.commit() 
 
             session['username'] = new_username
             flash("Profile updated successfully!", "success")
@@ -516,7 +515,7 @@ def profile():
     query = text("SELECT username, description, password FROM Users WHERE email = :email")
     with engine.connect() as connection:
         result = connection.execute(query, {'email': email}).fetchone()
-        
+
     # Fetch the watchlists owned by the user
     watchlists_query = text("""
         SELECT wid, name, status FROM Watchlist_own WHERE owner = :email
