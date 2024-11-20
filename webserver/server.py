@@ -330,6 +330,16 @@ def create_watchlist():
         """
         g.conn.execute(text(query), {'wid': wid, 'name': name, 'status': public_status, 'owner': owner})
 
+        # Check if the watchlist entry is successfully created
+        check_watchlist_query = """
+            SELECT 1 FROM Watchlist_own WHERE wid = :wid
+        """
+        check_watchlist_result = g.conn.execute(text(check_watchlist_query), {'wid': wid}).fetchone()
+
+        if not check_watchlist_result:
+            flash("Failed to create watchlist. Please try again.", "danger")
+            return redirect('/watchlists')
+
         return redirect(f'/watchlist/{wid}/add-movies')
 
     logged_in = 'email' in session
@@ -340,6 +350,16 @@ def create_watchlist():
 def add_movies_to_watchlist(wid):
     if 'email' not in session:
         return redirect('/login')
+
+    # Ensure the watchlist exists before adding movies
+    check_watchlist_query = """
+        SELECT 1 FROM Watchlist_own WHERE wid = :wid
+    """
+    check_watchlist_result = g.conn.execute(text(check_watchlist_query), {'wid': wid}).fetchone()
+
+    if not check_watchlist_result:
+        flash("Watchlist not found. Cannot add movies.", "danger")
+        return redirect('/watchlists')
 
     query = """
         SELECT Movie.mid, Movie.title, Movie.synopsis
@@ -357,20 +377,29 @@ def add_movies_to_watchlist(wid):
     movies = cursor.fetchall()
     cursor.close()
 
+    # Handle movie selection and insert into Track table
     if request.method == 'POST' and 'movies' in request.form:
         selected_movies = request.form.getlist('movies')
+        
+        # Ensure we insert only if the entry doesn't already exist in Track
         for mid in selected_movies:
-            query = """
-                INSERT INTO Track (wid, mid, if_watched)
-                VALUES (:wid, :mid, 0)
+            # Check if the movie already exists in the Track table for this watchlist
+            check_query = """
+                SELECT 1 FROM Track WHERE wid = :wid AND mid = :mid
             """
-            g.conn.execute(text(query), {'wid': wid, 'mid': mid})
+            existing_entry = g.conn.execute(text(check_query), {'wid': wid, 'mid': mid}).fetchone()
+
+            if not existing_entry:
+                insert_query = """
+                    INSERT INTO Track (wid, mid, if_watched)
+                    VALUES (:wid, :mid, 0)
+                """
+                g.conn.execute(text(insert_query), {'wid': wid, 'mid': mid})
 
         return redirect('/watchlists')
 
     logged_in = 'email' in session
     return render_template('add_movies_to_watchlist.html', logged_in=logged_in, wid=wid, movies=movies)
-
 
 
 #####Login & SignUp & Profile#######
