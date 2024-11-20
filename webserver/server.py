@@ -447,6 +447,7 @@ def signup():
     
     return render_template('signup.html')
 
+    
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if 'email' not in session:
@@ -462,7 +463,9 @@ def profile():
         new_password = request.form['new_password']
 
         query = text("SELECT * FROM Users WHERE email = :email")
-        user = engine.execute(query, {'email': email}).fetchone()
+
+        with engine.connect() as connection:
+            user = connection.execute(query, {'email': email}).fetchone()
 
         if not user:
             flash("User not found.", "danger")
@@ -493,7 +496,8 @@ def profile():
             params['new_password'] = hashed_password
 
         try:
-            engine.execute(update_query, params)
+            with engine.connect() as connection:
+                connection.execute(update_query, params)
             session['username'] = new_username
             flash("Profile updated successfully!", "success")
         except Exception as e:
@@ -501,12 +505,13 @@ def profile():
 
         return profile()
 
+    # Get the user details for GET request
     query = text("SELECT * FROM Users WHERE email = :email")
-    user = engine.execute(query, {'email': email}).fetchone()
+    with engine.connect() as connection:
+        user = connection.execute(query, {'email': email}).fetchone()
 
     logged_in = 'email' in session
     return render_template('profile.html', logged_in=logged_in, user=user)
-
 
 
 #logout
