@@ -49,6 +49,7 @@ def index():
 ######The following is for content related to Movies#########
 @app.route('/movies', methods=['GET', 'POST'])
 def find_movie():
+
     base_query = """
         SELECT Movie.mid, Movie.title, Movie.synopsis, 
                CAST(AVG(Reviews_Rate_Write.rating) AS DECIMAL(10, 2)) AS average_rating
@@ -67,15 +68,15 @@ def find_movie():
 
     final_query = text(base_query)
 
-    cursor = g.conn.execute(final_query, **params)
+    cursor = g.conn.execute(final_query, params)
 
-    #populate movies list
+    # Populate movies list
     movies = [
         {
-            'mid': row[0], 
-            'title': row[1], 
-            'synopsis': row[2], 
-            'average_rating': row[3] 
+            'mid': row['mid'],
+            'title': row['title'],
+            'synopsis': row['synopsis'],
+            'average_rating': row['average_rating']
         }
         for row in cursor
     ]
@@ -265,9 +266,9 @@ def find_watchlist():
 
     final_query = text(base_query)
 
-    cursor = g.conn.execute(final_query, **params)
+    cursor = g.conn.execute(final_query, params)
 
-    #populate watchlists list
+    # Populate watchlists list
     watchlists = [
         {
             'wid': row[0], 
@@ -379,7 +380,10 @@ def login():
         email = request.form['email']
         password = request.form['password']
         query = text("SELECT * FROM Users WHERE email = :email")
-        user = engine.execute(query, {'email': email}).fetchone()
+        
+        # Execute the query with the connection
+        with engine.connect() as connection:
+            user = connection.execute(query, {'email': email}).fetchone()
         
         if user and check_password_hash(user['password'], password):
             session['username'] = user['username']
@@ -390,6 +394,7 @@ def login():
             flash("Invalid email or password.", "danger")
     
     return render_template('login.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
