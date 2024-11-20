@@ -49,7 +49,6 @@ def index():
 ######The following is for content related to Movies#########
 @app.route('/movies', methods=['GET', 'POST'])
 def find_movie():
-
     base_query = """
         SELECT Movie.mid, Movie.title, Movie.synopsis, 
                CAST(AVG(Reviews_Rate_Write.rating) AS DECIMAL(10, 2)) AS average_rating
@@ -57,30 +56,26 @@ def find_movie():
         LEFT JOIN Reviews_Rate_Write ON Movie.mid = Reviews_Rate_Write.mid
     """
 
-    #If the user submits a search term, add a WHERE clause
     if request.method == 'POST':
         search_term = request.form['name']
-        # Add the search condition to the query
         base_query += " WHERE Movie.title LIKE :search "
         params = {'search': f"%{search_term}%"}
     else:
         params = {}
 
-    #Complete the query adding the GROUP BY clause
     base_query += "GROUP BY Movie.mid"
 
     final_query = text(base_query)
 
-    #Execute the query with parameters using text()
     cursor = g.conn.execute(final_query, **params)
 
-    #populate movies dict
+    #populate movies list
     movies = [
         {
-            'mid': row['mid'],
-            'title': row['title'],
-            'synopsis': row['synopsis'],
-            'average_rating': row['average_rating']
+            'mid': row[0], 
+            'title': row[1], 
+            'synopsis': row[2], 
+            'average_rating': row[3] 
         }
         for row in cursor
     ]
@@ -255,7 +250,6 @@ def navigate_week():
 ######The following is for content related to Movies#########
 @app.route('/watchlists', methods=['GET', 'POST'])
 def find_watchlist():
-
     base_query = """
         SELECT Watchlist_own.wid, Watchlist_own.owner, Watchlist_own.name
         FROM Watchlist_own
@@ -273,12 +267,12 @@ def find_watchlist():
 
     cursor = g.conn.execute(final_query, **params)
 
-    #populate movies dict
+    #populate watchlists list
     watchlists = [
         {
-            'wid': row['wid'],
-            'owner': row['owner'],
-            'name': row['name']
+            'wid': row[0], 
+            'owner': row[1], 
+            'name': row[2] 
         }
         for row in cursor
     ]
