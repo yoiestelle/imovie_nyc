@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, g, session, flash, redirect
+from flask import Flask, request, render_template, g, session, url_for, flash, redirect
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import * 
@@ -447,12 +447,12 @@ def signup():
     
     return render_template('signup.html')
 
-    
+
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if 'email' not in session:
         flash("Please log in to access your profile.", "danger")
-        return login()
+        return redirect(url_for('login')) 
 
     email = session['email']
 
@@ -462,19 +462,22 @@ def profile():
         current_password = request.form['current_password']
         new_password = request.form['new_password']
 
-        query = text("SELECT * FROM Users WHERE email = :email")
+        query = text("SELECT username, description, password FROM Users WHERE email = :email")
 
         with engine.connect() as connection:
-            user = connection.execute(query, {'email': email}).fetchone()
+            result = connection.execute(query, {'email': email}).fetchone()
 
-        if not user:
+        if not result:
             flash("User not found.", "danger")
-            return logout()
+            return redirect(url_for('logout'))
+
+        user = result._mapping
 
         if new_password and not check_password_hash(user['password'], current_password):
             flash("Incorrect current password.", "danger")
-            return profile()
+            return redirect(url_for('profile'))
 
+        # Prepare the update query with the optional password clause
         update_query = text("""
             UPDATE Users
             SET username = :username,
@@ -485,6 +488,7 @@ def profile():
             password_clause=", password = :new_password" if new_password else ""
         ))
 
+        # Prepare the parameters for the update query
         params = {
             'username': new_username,
             'description': new_description,
@@ -497,22 +501,26 @@ def profile():
 
         try:
             with engine.connect() as connection:
+                # Execute the update query
                 connection.execute(update_query, params)
+                connection.commit() 
+
             session['username'] = new_username
             flash("Profile updated successfully!", "success")
         except Exception as e:
-            flash("An error occurred while updating your profile.", "danger")
+            flash(f"An error occurred while updating your profile: {e}", "danger")
 
-        return profile()
+        return redirect(url_for('profile'))
 
     # Get the user details for GET request
-    query = text("SELECT * FROM Users WHERE email = :email")
+    query = text("SELECT username, description, password FROM Users WHERE email = :email")
     with engine.connect() as connection:
-        user = connection.execute(query, {'email': email}).fetchone()
+        result = connection.execute(query, {'email': email}).fetchone()
+
+    user = result._mapping 
 
     logged_in = 'email' in session
     return render_template('profile.html', logged_in=logged_in, user=user)
-
 
 #logout
 @app.route('/logout')
