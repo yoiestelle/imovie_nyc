@@ -73,10 +73,10 @@ def find_movie():
     # Populate movies list
     movies = [
         {
-            'mid': row['mid'],
-            'title': row['title'],
-            'synopsis': row['synopsis'],
-            'average_rating': row['average_rating']
+            'mid': row[0],
+            'title': row[1],
+            'synopsis': row[2],
+            'average_rating': row[3]
         }
         for row in cursor
     ]
@@ -381,17 +381,20 @@ def login():
         password = request.form['password']
         query = text("SELECT * FROM Users WHERE email = :email")
         
-        # Execute the query with the connection
         with engine.connect() as connection:
             user = connection.execute(query, {'email': email}).fetchone()
         
-        if user and check_password_hash(user['password'], password):
-            session['username'] = user['username']
-            session['email'] = user['email']
-            flash("Successfully logged in!", "success")
-            return index()
+        if user:
+            user_password = user[2]
+            if check_password_hash(user_password, password):
+                session['username'] = user[1]
+                session['email'] = user[0]
+                flash("Successfully logged in!", "success")
+                return index()
+            else:
+                flash("Invalid email or password.", "danger")
         else:
-            flash("Invalid email or password.", "danger")
+            flash("User not found.", "danger")
     
     return render_template('login.html')
 
