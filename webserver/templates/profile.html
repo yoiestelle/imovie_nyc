@@ -36,5 +36,21 @@
     </form>
 </div>
 
+<div class="watchlist-container content-card">
+    <h2>Your Watchlists</h2>
+    {% if watchlists %}
+        <ul class="watchlist-list">
+            {% for watchlist in watchlists %}
+                <li>
+                    <a href="{{ url_for('watchlist_details', wid=watchlist.wid) }}">{{ watchlist.name }}</a> 
+                    - Status: {{ watchlist.status }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no watchlists.</p>
+    {% endif %}
+</div>
+
 <a href="{{ url_for('index') }}" class="btn-link">Back to Home</a>
 {% endblock %}

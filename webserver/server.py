@@ -516,11 +516,19 @@ def profile():
     query = text("SELECT username, description, password FROM Users WHERE email = :email")
     with engine.connect() as connection:
         result = connection.execute(query, {'email': email}).fetchone()
+        
+    # Fetch the watchlists owned by the user
+    watchlists_query = text("""
+        SELECT wid, name, status FROM Watchlist_own WHERE owner = :email
+    """)
+    with engine.connect() as connection:
+        watchlists = connection.execute(watchlists_query, {'email': email}).fetchall()
+
 
     user = result._mapping 
 
     logged_in = 'email' in session
-    return render_template('profile.html', logged_in=logged_in, user=user)
+    return render_template('profile.html', logged_in=logged_in, user=user, watchlists=watchlists)
 
 #logout
 @app.route('/logout')
