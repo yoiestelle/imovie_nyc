@@ -330,6 +330,9 @@ def create_watchlist():
         """
         g.conn.execute(text(query), {'wid': wid, 'name': name, 'status': public_status, 'owner': owner})
 
+        # Commit the transaction after the insert
+        g.conn.commit()
+
         # Check if the watchlist entry is successfully created
         check_watchlist_query = """
             SELECT 1 FROM Watchlist_own WHERE wid = :wid
@@ -395,6 +398,8 @@ def add_movies_to_watchlist(wid):
                     VALUES (:wid, :mid, 0)
                 """
                 g.conn.execute(text(insert_query), {'wid': wid, 'mid': mid})
+        
+        g.conn.commit()
 
         return redirect('/watchlists')
 
